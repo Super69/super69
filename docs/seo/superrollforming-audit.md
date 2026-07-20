@@ -31,6 +31,11 @@ WordPress + WooCommerce + Elementor, Yoast SEO, hosted on Hostinger (LiteSpeed, 
 
 ### Issues to fix 🔧 (priority order)
 
+> **Status:** Fixes #1–#4 are implemented as deployable code in
+> [`wordpress/mu-plugins/super-seo-enhancements.php`](../../wordpress/mu-plugins/super-seo-enhancements.php)
+> — install per [`apply-guide.md`](apply-guide.md). Title de-duplication (#6) and copy expansion
+> are content tasks tracked in [`action-plan.md`](action-plan.md).
+
 | # | Issue | Evidence | Fix |
 |---|-------|----------|-----|
 | 1 | **No `Product` schema on product pages** | `/product/deck-forming-machine/` emits only `WebPage`/`Organization`/`Breadcrumb` — no `Product`/`Offer`/`AggregateRating` | Enable WooCommerce/Yoast product schema (or RankMath) so machines are eligible for rich results (price/availability/ratings). Biggest win for a 20-product store. |
