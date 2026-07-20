@@ -47,6 +47,17 @@ function super_seo_profile() {
 			'https://www.youtube.com/@SuperRollForming',
 		),
 		'og_home_title' => 'Roll Forming Machine Manufacturer Since 1969 | Super Rollforming',
+
+		// --- Google connectivity (leave blank until you have the values) ---
+		// Search Console "HTML tag" verification code — paste ONLY the content value
+		// (the long token), not the whole meta tag. From Search Console → add property
+		// → HTML tag method. Not needed if you verify via Site Kit or DNS TXT.
+		'google_site_verification' => '',
+		// Bing Webmaster verification token (optional), same idea.
+		'bing_site_verification'   => '',
+		// GA4 Measurement ID, e.g. "G-XXXXXXXXXX". Leave blank if you use Site Kit's
+		// own Analytics connection (don't set both — you'd double-count pageviews).
+		'ga4_measurement_id'       => '',
 	);
 }
 
@@ -233,3 +244,42 @@ add_action( 'wp_footer', function () {
 	) );
 	echo "\n<script type=\"application/ld+json\">" . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . "</script>\n";
 }, 98 );
+
+/**
+ * ---------------------------------------------------------------------------
+ * 5. Google (and Bing) connectivity.
+ * ---------------------------------------------------------------------------
+ * Two ways to connect this Hostinger WordPress site to your Google account:
+ *
+ *   A) Google Site Kit plugin (recommended) — connects Search Console, Analytics,
+ *      and PageSpeed with one Google login, and handles verification for you.
+ *      If you use Site Kit, leave the config values in section 0 blank.
+ *
+ *   B) Manual — paste your Search Console "HTML tag" token and/or GA4 Measurement
+ *      ID into section 0 and this code outputs the verification meta tag + GA4
+ *      tag site-wide. Use this if you prefer not to install Site Kit, or to verify
+ *      before connecting. See docs/seo/google-connect-guide.md for the full walkthrough.
+ *
+ * Everything below is inert until you set a value — nothing is emitted by default.
+ */
+add_action( 'wp_head', function () {
+	$profile = super_seo_profile();
+
+	// Search Console / Bing site-verification meta tags (homepage is enough, but
+	// emitting site-wide is harmless and more robust).
+	if ( ! empty( $profile['google_site_verification'] ) ) {
+		printf( '<meta name="google-site-verification" content="%s" />' . "\n", esc_attr( $profile['google_site_verification'] ) );
+	}
+	if ( ! empty( $profile['bing_site_verification'] ) ) {
+		printf( '<meta name="msvalidate.01" content="%s" />' . "\n", esc_attr( $profile['bing_site_verification'] ) );
+	}
+
+	// GA4 (gtag.js). Skip logged-in admins/editors so your own visits don't skew data.
+	$ga4 = $profile['ga4_measurement_id'];
+	if ( ! empty( $ga4 ) && ! ( is_user_logged_in() && current_user_can( 'edit_posts' ) ) ) {
+		$ga4 = esc_js( $ga4 );
+		echo "<!-- Google Analytics 4 (via Super SEO Enhancements) -->\n";
+		echo '<script async src="https://www.googletagmanager.com/gtag/js?id=' . esc_attr( $profile['ga4_measurement_id'] ) . '"></script>' . "\n";
+		echo "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{$ga4}');</script>\n";
+	}
+}, 1 );

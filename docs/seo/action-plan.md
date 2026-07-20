@@ -11,7 +11,7 @@ intent). This is the prioritized roadmap; the technical audit is in
 1. **Install `super-seo-enhancements.php`** → Product schema, emoji-clean titles, fixed `og:title`, LocalBusiness schema. Verify in Rich Results Test.
 2. **Fix duplicate/broken product titles.** Two products share the identical title *"Uni Strut Channel Roll Forming Machine for Solar panels Structure- Super Rollforming"*, and several titles miss a space before the trailing dash (`Structure- Super`). Give each product a **unique, keyword-led title** (e.g. *"41×21 Uni-Strut Channel Roll Forming Machine"* vs *"Multi-Size Uni-Strut Channel Roll Forming Machine"*).
 3. **Enrich thin product pages.** Add ≥300 words of unique copy per machine: forming range/sizes, material & thickness, speed, motor/PLC, roller stations, applications, and a spec table. This directly supports rich results *and* rankings.
-4. **Set up Google Search Console + Bing Webmaster** (if not already) and submit `sitemap_index.xml`. GSC is also what unlocks the first-party "striking distance" workflow in OpenSEO.
+4. **Connect Google** — Search Console is already verified; the gap is **Google Analytics 4**. Follow [`google-connect-guide.md`](google-connect-guide.md) (Site Kit or the mu-plugin GA4 field), submit `sitemap_index.xml`, and add Bing. GSC is what unlocks the first-party "striking distance" workflow in OpenSEO.
 
 ## Next — 2 to 4 weeks
 
